@@ -13,6 +13,12 @@ const BLUE_RANGE = { RED: 25, GREEN: 10, BLUE: 50 };
 const MAX_OFFSET = 250;
 const MAX_ROTATION = 360;
 
+// Other fun things
+const AUDIO_BOUNCE_OFFSET = 2;
+const AUDIO_BOUNCE_INTERVAL = 400;
+
+const BACKGROUND_COLOR_INTERVAL = 30000;
+
 const clampColor = (value) => Math.max(0, Math.min(value, 255));
 
 const randomNumber = (min, max) => Math.floor((Math.random() * (max - min + 1)) + min);
@@ -46,28 +52,37 @@ const updateTitle = (title, rotation, toggle) => {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+
+    // Initialize letter colors
     const letters = document.querySelectorAll('div.letter');
-    const title = document.getElementById('title');
-    const shadowTitle = document.getElementById('shadow-title');
-    const audio = document.getElementById('audio-player');
+    letters.forEach(letter => letter.style.color = randomGreen());
+
+    // Show audio button once page has loaded
     const audioButton = document.getElementById('audio-button');
-
-    letters.forEach(letter => {
-        letter.style.color = randomGreen();
-    });
-    
     audioButton.classList.remove('hidden');
+    audioButton.addEventListener('click', () => (audio.paused ? audio.play() : audio.pause()));
+    
+    // Bounce audio button when audio is playing
+    const audio = document.getElementById('audio-player');
+    const bounceAudioButton = () => (
+        (audioButton.style.transform === `translateY(${AUDIO_BOUNCE_OFFSET}px)`) ?
+            audioButton.style.transform = 'translateY(0px)' :
+            audioButton.style.transform = `translateY(${AUDIO_BOUNCE_OFFSET}px)`
+    );  
+    setInterval(() => (!audio.paused ? bounceAudioButton() : null), AUDIO_BOUNCE_INTERVAL);
 
+    // Handle title and letter animations
+    const title = document.getElementById('title');
     const handleMouseOver = () => {
         updateTitle(title, randomRotation(), setActive);
         letters.forEach(letter => updateLetter(letter, randomPink(), randomOffset(), setActive));
-    }
-    
+    } 
     const handleMouseOut = () => {
         updateTitle(title, '0deg', setInactive);
         letters.forEach(letter => updateLetter(letter, randomGreen(), '0px', setInactive));
     }
 
+    // On touch devices, reset letters after one second
     let timeoutId = null;
     const handleTouch = () => {
         clearTimeout(timeoutId);
@@ -75,29 +90,14 @@ document.addEventListener("DOMContentLoaded", () => {
         timeoutId = setTimeout(() => handleMouseOut(), 1000);
     }
 
+    // Add input listeners to our invisible div
+    // This keeps the hover position static as the letters move
+    const shadowTitle = document.getElementById('shadow-title');
     shadowTitle.addEventListener('mouseover', () => handleMouseOver());
     shadowTitle.addEventListener('mouseout', () => handleMouseOut());
     shadowTitle.addEventListener('touchstart', () => handleTouch());
 
-    setInterval(() => {
-        document.getElementById('container').style.backgroundColor = randomBlue();
-    }, 30000);
-
-    setInterval(() => {
-        if (!audio.paused) {
-            if(audioButton.style.transform === 'translateY(2px)') {
-                audioButton.style.transform = 'translateY(0px)';
-            } else {
-                audioButton.style.transform = 'translateY(2px)';
-            }
-        }
-    }, 400);
-
-    document.getElementById('audio-button').addEventListener('click', () => {
-        if (audio.paused) {
-            audio.play();
-        } else {
-            audio.pause();
-        }
-    });
+    // Change container background color every BACKGROUND_COLOR_INTERVAL milliseconds
+    const container = document.getElementById('container');
+    setInterval(() => container.style.backgroundColor = randomBlue(), BACKGROUND_COLOR_INTERVAL);
 });
