@@ -35,14 +35,17 @@ body {
 }
 
 #container {
-    background-color: var(--blue);
     position: relative;
     height: 100%;
     width: 100%;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
     overflow: hidden;
+
+    background-color: var(--blue);
     transition: background-color 30s ease-in-out;
 }
 
@@ -95,42 +98,44 @@ body {
 
 #audio-container {
     position: absolute;
+    width: 10px;
     bottom: 10px;
     right: 15px;
-    z-index: 10;
-    width: 10px;
-    border-bottom: 2px solid var(--pink);
+
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     gap: 5px;
+
+    border-bottom: 2px solid var(--pink);
+    z-index: 10;
 }
 
 #audio-button {
     position: relative;
-    background-color: transparent;
-    
-    color: var(--pink);
-    border: none;
-    
     height: 10px;
     width: 0px;
-    
+
     cursor: pointer;
+    background-color: transparent;
+    color: var(--pink);
+    border: none;
+
     font-family: 8bitoperator, sans-serif;
     font-size: 0px;
-    
 }
 
 #audio-button::before {
     position: absolute;
-    opacity: 0.8;
+    display: inline-block;
     top: -25px;
     left: -6px;
-    display: inline-block;
+    
     content: "♪";
     font-size: 2rem;
+
+    opacity: 0.8;
     transition: transform 0.4s ease-in-out;
     transition: opacity 0.4s ease-in-out;
 }
@@ -144,21 +149,25 @@ body {
     position: absolute;
     bottom: 10px;
     left: 15px;
-    z-index: 10;
+    
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     gap: 10px;
+
+    z-index: 10;
 }
 
 #footer a {
-    opacity: 0.8;
-    width: 25px;
     display: inline-block;
+    width: 25px;
+    
     text-decoration: none;
     color: var(--pink);
     font-size: 0.75rem;
+
+    opacity: 0.8;
     transform: rotate(-45deg);
     transition: transform 0.4s ease-in-out;
 }
