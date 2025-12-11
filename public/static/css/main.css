@@ -1,0 +1,176 @@
+@font-face {
+    font-family: 8bitooperator;
+    src: url('/static/fonts/8bitoperator.ttf');
+}
+
+
+@font-face {
+    font-family: SpaceMono;
+    src: url('/static/fonts/SpaceMono-Regular.ttf');
+}
+
+@font-face {
+    font-family: SpaceMono;
+    src: url('/static/fonts/SpaceMono-Bold.ttf');
+    font-weight: bold;
+}
+
+:root {
+    --offset: 10px;
+    --rotation: 180deg;
+    --blue: rgb(1, 10, 23);
+    --pink: rgb(222, 15, 119);
+    --light-pink: rgb(212, 104, 158);
+    --green: rgb(146, 212, 104);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: SpaceMono, sans-serif;
+    color: white;
+    cursor: url('/static/images/wakame.png'), auto;
+
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+#container {
+    background-color: var(--blue);
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: background-color 30s ease-in-out;
+}
+
+#shadow-title {
+    position: absolute;
+    width: 20rem;
+    height: 20rem;
+    top: calc(50vh - 10rem);
+    left: calc(50vw - 10rem);
+    z-index: 10;
+}
+
+#shadow-title:hover {
+    cursor: url('/static/images/wakame_pink.png'), auto;
+}
+
+#title {
+    height: 10rem;
+    padding: 2rem 2rem;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    color: white;
+    font-size: 5vw;
+    font-weight: bold;
+    text-align: center;
+    
+    transition: transform 0.3s ease-in-out;
+}
+
+#title.active {
+    transform: rotate(var(--rotation));
+    transition: transform 0.3s ease-in-out;
+}
+
+#title div.letter {
+    display: inline-block;
+    transform: translate(0px, 0px);
+    transition: transform 0.3s ease-in-out;
+}
+
+#title div.letter.active {
+    transform: translate(0px, var(--offset));
+    transition: transform 0.3s ease-in-out;
+}
+
+#audio-container {
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    z-index: 10;
+    width: 10px;
+    border-bottom: 2px solid var(--pink);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+#audio-button {
+    position: relative;
+    background-color: transparent;
+    
+    color: var(--pink);
+    border: none;
+    
+    height: 10px;
+    width: 0px;
+    
+    cursor: pointer;
+    font-family: 8bitoperator, sans-serif;
+    font-size: 0px;
+    
+}
+
+#audio-button::before {
+    position: absolute;
+    opacity: 0.8;
+    top: -25px;
+    left: -6px;
+    display: inline-block;
+    content: "♪";
+    font-size: 2rem;
+    transition: transform 0.4s ease-in-out;
+    transition: opacity 0.4s ease-in-out;
+}
+
+#audio-button:hover::before {
+    opacity: 1;
+    transition: opacity 0.4s ease-in-out;
+}
+
+#footer {
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+    z-index: 10;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#footer a {
+    opacity: 0.8;
+    width: 25px;
+    display: inline-block;
+    text-decoration: none;
+    color: var(--pink);
+    font-size: 0.75rem;
+    transform: rotate(-45deg);
+    transition: transform 0.4s ease-in-out;
+}
+
+#footer a:hover {
+    opacity: 1;
+    transform: rotate(-40deg) translateY(-5px);
+    transition: transform 0.4s ease-in-out;
+}
